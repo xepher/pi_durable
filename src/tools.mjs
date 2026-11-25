@@ -1,5 +1,6 @@
 const dictTools = {
-    'get_temperature': getTemperature
+    'get_temperature': getTemperature,
+    'find_cities': find_cities
 };
 
 function getTemperature(city) {
@@ -13,6 +14,10 @@ function getTemperature(city) {
     }
 }
 
+function find_cities() {
+    return ['北京', '杭州'];
+}
+
 export function dispatchTool(name, argumentsJson) {
     // result
     let result = {
@@ -24,10 +29,10 @@ export function dispatchTool(name, argumentsJson) {
         result.error = `unknown_tool`;
         return result;
     };
-    
+
     const tool = dictTools[name];
 
-    if(typeof argumentsJson !== 'string') {
+    if (typeof argumentsJson !== 'string') {
         result.error = `invalid_arguments`;
         return result;
     }
@@ -47,25 +52,37 @@ export function dispatchTool(name, argumentsJson) {
         return result;
     }
 
-    const keys = Object.keys(data);
-    if (keys.length !== 1 || keys[0] !== 'city') {
-        result.error = `invalid_arguments`;
-        return result;
+    if (name === 'get_temperature') {
+        const keys = Object.keys(data);
+        if (keys.length !== 1 || keys[0] !== 'city') {
+            result.error = `invalid_arguments`;
+            return result;
+        }
+
+        if (typeof data.city !== 'string' || data.city.trim() === '') {
+            result.error = `invalid_arguments`;
+            return result;
+        }
+
+        if (tool(data.city) === null) {
+            result.error = `unknown_city`;
+            return result;
+        }
+
+        result.ok = true;
+        result.city = data.city;
+        result.celsius = tool(data.city);
     }
 
-    if (typeof data.city !== 'string' || data.city.trim() === '') {
-        result.error = `invalid_arguments`;
-        return result;
-    }
+    if (name === 'find_cities') {
+        if (Object.keys(data).length !== 0) {
+            result.error = `invalid_arguments`;
+            return result;
+        }
 
-    if (tool(data.city) === null) {
-        result.error = `unknown_city`;
-        return result;
+        result.ok = true;
+        result.cities = tool();
     }
-
-    result.ok = true;
-    result.city = data.city;
-    result.celsius = tool(data.city);
 
     return result;
 }
