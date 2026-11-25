@@ -101,7 +101,16 @@ console.log(dispatchTool('unknown', '{}'));
 
 在 `src/cli.mjs` 从 `process.argv.slice(2).join(" ")` 取问题，调用 `runAgent` 并输出最终答案。空问题时提示用法。加入简短的事件输出，例如轮次、工具名称和成功状态，方便观察真实流程。
 
-**验收。** 运行 `node src/cli.mjs '北京几度？'`，应看到两次模型调用、中间一次工具调用，并得到 `北京是 6°C。`。把 `maxRounds` 设成 `1`，确认程序以轮数上限错误结束。再把假模型的工具请求改成未知工具，确认下一轮模型能收到 `ok: false` 的结果。
+**验收。** 运行 `node src/cli.mjs '北京几度？'`，应依次看到以下输出（省略空行）：
+
+```text
+=== Round 1 ===
+=== Tool: get_temperature Execution result: ok=true ===
+=== Round 2 ===
+北京是 6°C。
+```
+
+不传参数或只传空格时，应显示 `用法：node src/cli.mjs "你的问题"`。把 `maxRounds` 设成 `1`，确认程序以轮数上限错误结束。再把假模型的工具请求改成未知工具，确认下一轮模型能收到 `ok: false` 的结果。
 
 **检查点。** 同轮出现多个工具调用时，每个请求都需要一条匹配的结果。对模型推理项等其他输出项，按 API 合同原样放回上下文。程序提取和展示的是工具调用与答案。 [OpenAI 工具调用指南](https://developers.openai.com/api/docs/guides/function-calling)
 
