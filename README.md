@@ -145,7 +145,7 @@ console.log(dispatchTool('unknown', '{}'));
 
 如果 HTTP 状态不是成功，报告 HTTP 状态和可安全显示的错误摘要，确保输出里没有 API Key。为 `fetch` 设置有限的请求超时，例如 `AbortSignal.timeout(30_000)`。客户端解析 JSON 后把响应交给已有的循环。 [Responses API](https://platform.openai.com/docs/api-reference/responses/create) · [函数工具定义和结果回填](https://developers.openai.com/api/docs/guides/function-calling)
 
-**验收。** 先用假模型重跑第 4 课，再运行真实模型。真实模型可能把两个温度调用分开，也可能放在同一轮。验收看是否先查候选、是否正确回填每条调用的结果，以及结论是否使用工具返回的数据。
+**验收。** 先用假模型重跑第 4 课，并确认单城问题「杭州几度？」返回 `杭州是 14°C。`。再运行真实模型。真实模型可能把两个温度调用分开，也可能放在同一轮。验收看是否先查候选、是否正确回填每条调用的结果，以及结论是否使用工具返回的数据。
 
 ```powershell
 node src/cli.mjs '找出两个候选城市，比较谁更冷'

@@ -95,6 +95,12 @@ export async function callMock(input) {
                 : "get_temperature";
 
             const tool = availableTools.find(tool => tool.name === toolName);
+
+            if (toolName === "get_temperature") {
+                const city = question.includes("杭州") ? "杭州" : "北京";
+                return { output: [{ ...tool, arguments: JSON.stringify({ city }) }] };
+            }
+
             return { output: [tool] };
         }
     }
