@@ -1,0 +1,86 @@
+[
+    {
+        "runid": "2b709191-b7dd-4e64-9726-856aafdead5d",
+        "question": "北京温度多少",
+        "completedRounds": 2,
+        "status": "completed",
+        "answer": "北京是 6°C。",
+        "input": [
+            {
+                "role": "user",
+                "content": "北京温度多少"
+            },
+            {
+                "type": "function_call",
+                "id": "fc_mock_1",
+                "call_id": "call_mock_1",
+                "name": "get_temperature",
+                "arguments": "{\"city\":\"北京\"}"
+            },
+            {
+                "type": "function_call_output",
+                "call_id": "call_mock_1",
+                "output": "{\"ok\":true,\"city\":\"北京\",\"celsius\":6}"
+            },
+            {
+                "type": "message",
+                "content": [
+                    { "type": "output_text", "text": "北京是 6°C。" }
+                ]
+            }
+        ]
+    },
+    {
+        "runid": "a8d554a8-da1b-4022-a988-dab6e72daa88",
+        "question": "比较北京与杭州谁比较冷",
+        "completedRounds": 3,
+        "status": "completed",
+        "answer": "北京更冷，相差 8°C",
+        "input": [
+            {
+                "role": "user",
+                "content": "比较北京与杭州谁比较冷"
+            },
+            {
+                "type": "function_call",
+                "id": "fc_mock_2",
+                "call_id": "call_mock_2",
+                "name": "find_cities",
+                "arguments": "{}"
+            },
+            {
+                "type": "function_call_output",
+                "call_id": "call_mock_2",
+                "output": "{\"ok\":true,\"cities\":[\"北京\",\"杭州\"]}"
+            },
+            {
+                "type": "function_call",
+                "call_id": "call_mock_temp_1",
+                "name": "get_temperature",
+                "arguments": "{\"city\":\"北京\"}"
+            },
+            {
+                "type": "function_call",
+                "call_id": "call_mock_temp_2",
+                "name": "get_temperature",
+                "arguments": "{\"city\":\"杭州\"}"
+            },
+            {
+                "type": "function_call_output",
+                "call_id": "call_mock_temp_1",
+                "output": "{\"ok\":true,\"city\":\"北京\",\"celsius\":6}"
+            },
+            {
+                "type": "function_call_output",
+                "call_id": "call_mock_temp_2",
+                "output": "{\"ok\":true,\"city\":\"杭州\",\"celsius\":14}"
+            },
+            {
+                "type": "message",
+                "content": [
+                    { "type": "output_text", "text": "北京更冷，相差 8°C" }
+                ]
+            }
+        ]
+    }
+]
